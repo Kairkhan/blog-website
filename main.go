@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -18,6 +20,7 @@ func store(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	var post Post
 	_ = json.NewDecoder(request.Body).Decode(&post)
+	post.ID = strconv.Itoa(rand.Intn(1000000))
 	posts = append(posts, post)
 	json.NewEncoder(writer).Encode(post)
 }
